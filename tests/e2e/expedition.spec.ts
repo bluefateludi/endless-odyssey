@@ -1,0 +1,85 @@
+import { closePanel, expect, openCamp, openPanel, screenshot, test } from './browser'
+import { approachLoot, fight, fixCombatRolls, observeCombat, readCombat } from './combat'
+
+test.use({ trace: { mode: 'retain-on-failure', screenshots: false, snapshots: false } })
+
+test('新角色击杀升级、分配天赋、拾取装备并击败裂木古王', async ({ page }) => {
+  // SwiftShader advances the real-time simulation more slowly on shared CI hosts.
+  test.setTimeout(240_000)
+  await observeCombat(page)
+  await fixCombatRolls(page)
+  await openCamp(page)
+
+  const level = page.getByLabel('角色等级 1', { exact: true })
+  const xp = page.getByRole('progressbar', { name: '升级经验' })
+  const zone = page.getByLabel('当前区域')
+  await expect(level).toBeVisible()
+  await expect(xp).toHaveAttribute('aria-valuenow', '0')
+  await screenshot(page, '01-camp')
+
+  await page.getByRole('button', { name: '出发远征' }).click()
+  await expect(zone).toContainText('遭遇 1 / 3 · 剩余 4')
+  const first = await fight(page, 1, async () => {
+    await expect(page.getByLabel('当前目标')).toContainText('灰棘猎犬')
+    await screenshot(page, '02-combat', true)
+  })
+  expect(first.kills).toBe(4)
+  await expect(zone).toContainText('苔角空地')
+  await expect(page.getByLabel('角色等级 2', { exact: true })).toBeVisible()
+  await expect(xp).toHaveAttribute('aria-valuenow', '0')
+  await expect(xp).toHaveAttribute('aria-valuemax', '40')
+  await expect(page.getByRole('button', { name: '天赋，1 点可用' })).toBeVisible()
+
+  const talents = await openPanel(page, 't')
+  expect((await readCombat(page)).paused).toBe(true)
+  await expect(talents.getByText('游戏已暂停')).toBeVisible()
+  await expect(talents.getByRole('button', { name: '力量，可点亮' })).toBeVisible()
+  await expect(talents.getByRole('button', { name: '迅刃，锁定' })).toBeVisible()
+  await talents.getByRole('button', { name: '点亮天赋' }).click()
+  await expect(talents.getByRole('button', { name: '力量，已点亮' })).toBeVisible()
+  await expect(talents.getByRole('button', { name: '重置天赋' })).toBeDisabled()
+  await screenshot(page, '03-talents')
+  await closePanel(page)
+
+  const pickup = await approachLoot(page)
+  await expect(pickup).toContainText('铁剑')
+  await page.keyboard.press('e')
+  await expect(page.getByText('拾取「铁剑」', { exact: true })).toBeVisible()
+  const inventory = await openPanel(page, 'i')
+  await expect(inventory.getByRole('button', { name: '铁剑，普通' })).toBeVisible()
+  await inventory.getByRole('button', { name: '穿戴', exact: true }).click()
+  await expect(inventory.getByRole('region', { name: '已穿戴装备' }).getByRole('button', { name: /铁剑/ })).toBeVisible()
+  await expect(inventory.getByRole('button', { name: '卸下' })).toBeEnabled()
+  await screenshot(page, '04-inventory')
+  await closePanel(page)
+
+  const second = await fight(page, 2, async () => {
+    await expect(page.getByLabel('当前目标')).toContainText('苔角守卫')
+    await screenshot(page, '05-elite', true)
+  })
+  expect(second.kills).toBe(5)
+  await expect(zone).toContainText('裂木石环')
+  await expect(xp).toHaveAttribute('aria-valuenow', '16')
+
+  const final = await fight(page, 3, async () => {
+    await expect(page.getByLabel('当前目标')).toContainText('裂木古王')
+    await screenshot(page, '06-boss', true)
+  })
+  expect(final.kills).toBe(6)
+  await expect(page.getByRole('heading', { name: '远征告捷' })).toBeVisible()
+  await expect(page.getByText('裂木古王已倒下。共击败 6 名敌人。')).toBeVisible()
+  await expect(page.getByLabel('角色等级 3', { exact: true })).toBeVisible()
+  await expect(xp).toHaveAttribute('aria-valuenow', '16')
+  await screenshot(page, '07-victory')
+
+  await page.getByRole('button', { name: '返回营地' }).click()
+  await expect(zone).toContainText('林缘营地')
+  await expect(page.getByRole('status').filter({ hasText: '已保存' })).toBeVisible()
+  await openCamp(page, true)
+  await expect(page.getByLabel('角色等级 3', { exact: true })).toBeVisible()
+  const reloadedTalents = await openPanel(page, 't')
+  await expect(reloadedTalents.getByRole('button', { name: '力量，已点亮' })).toBeVisible()
+  await closePanel(page)
+  const reloadedItems = await openPanel(page, 'i')
+  await expect(reloadedItems.getByRole('region', { name: '已穿戴装备' }).getByRole('button', { name: /铁剑/ })).toBeVisible()
+})

@@ -1,0 +1,103 @@
+{
+  "schemaVersion": 1,
+  "id": "moss-warden",
+  "version": "1.0.1",
+  "name": "Moss Warden",
+  "generator": "moss-warden",
+  "seed": 41707,
+  "tags": [
+    "forest",
+    "elite",
+    "construct"
+  ],
+  "art": {
+    "silhouette": "Hunched broad-shouldered bark construct with split ochre eyes, an amber heartwood core and a hooked root cleaver on its left arm.",
+    "surface": "Faceted bark in umber and greys, layered lichen and moss, pale twig tips and amber heartwood.",
+    "palette": {
+      "bark": "#513c2f",
+      "darkBark": "#322a25",
+      "wood": "#885b3d",
+      "cutWood": "#ba8954",
+      "stone": "#65736a",
+      "moss": "#506b32",
+      "leaf": "#78964a",
+      "lichen": "#a7ad63",
+      "ember": "#ffc361"
+    }
+  },
+  "units": "meters",
+  "up": "+Y",
+  "forward": "+Z",
+  "dimensions": {
+    "width": [
+      1.95,
+      3.1
+    ],
+    "height": [
+      2.7,
+      3.15
+    ],
+    "depth": [
+      0.95,
+      1.65
+    ],
+    "groundTolerance": 0.035
+  },
+  "collider": {
+    "shape": "cylinder",
+    "radius": 0.72,
+    "height": 2.5,
+    "center": [
+      0,
+      1.25,
+      0
+    ]
+  },
+  "animations": {
+    "Idle": {
+      "duration": 2.4,
+      "sample": 0.9,
+      "loop": true
+    },
+    "Walk": {
+      "duration": 0.86,
+      "sample": 0.25,
+      "loop": true
+    },
+    "Attack": {
+      "duration": 1.3,
+      "sample": 0.76,
+      "loop": false
+    },
+    "Hit": {
+      "duration": 0.32,
+      "sample": 0.14,
+      "loop": false
+    },
+    "Death": {
+      "duration": 1.1,
+      "sample": 1.1,
+      "loop": false
+    }
+  },
+  "gameplay": {
+    "attack": "Telegraphed cleaver sweep; the animation reaches its contact pose at 0.76 seconds.",
+    "lootRole": "Forest elite equipment drop and experience reward; encounter data owns loot tables."
+  },
+  "budget": {
+    "maxGlbBytes": 550000,
+    "maxTriangles": 100,
+    "maxTextures": 0,
+    "maxTextureBytes": 0,
+    "maxTexturePixels": 0,
+    "maxDrawCalls": 18,
+    "maxFrameP95Ms": 67
+  },
+  "source": {
+    "type": "original-procedural",
+    "author": "Endless Odyssey project",
+    "generator": "tools/asset-pipeline/models/moss-warden.mjs",
+    "inputs": [],
+    "license": "Project-owned asset; no third-party model, image, texture or motion files."
+  }
+}

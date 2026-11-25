@@ -1,0 +1,118 @@
+{
+  "killsPerKind": 100000,
+  "level": 1,
+  "seed": 25,
+  "samples": [
+    {
+      "kind": "normal",
+      "dropped": 19982,
+      "items": 19982,
+      "observedDropChance": 0.19982,
+      "expectedDropChance": 0.2,
+      "rarity": {
+        "common": 12959,
+        "magic": 5048,
+        "rare": 1791,
+        "epic": 165,
+        "legendary": 19
+      },
+      "expectedRarityWeights": {
+        "common": 65,
+        "magic": 25,
+        "rare": 9,
+        "epic": 0.9,
+        "legendary": 0.1
+      },
+      "affixes": {
+        "affix_regen": 1662,
+        "affix_health": 1472,
+        "affix_armor_pct": 1157,
+        "affix_health_pct": 1317,
+        "affix_attack_pct": 622,
+        "affix_ice": 760,
+        "affix_crit_multi": 1177,
+        "affix_attack_flat": 946,
+        "affix_crit": 1147,
+        "affix_attack_speed": 1445,
+        "affix_lightning": 774,
+        "affix_fire": 770,
+        "affix_armor": 1122,
+        "affix_move_speed": 254
+      }
+    },
+    {
+      "kind": "elite",
+      "dropped": 74946,
+      "items": 74946,
+      "observedDropChance": 0.74946,
+      "expectedDropChance": 0.75,
+      "rarity": {
+        "common": 22529,
+        "magic": 29919,
+        "rare": 18767,
+        "epic": 2990,
+        "legendary": 741
+      },
+      "expectedRarityWeights": {
+        "common": 30,
+        "magic": 40,
+        "rare": 25,
+        "epic": 4,
+        "legendary": 1
+      },
+      "affixes": {
+        "affix_armor": 13066,
+        "affix_health": 15449,
+        "affix_regen": 17594,
+        "affix_attack_speed": 10702,
+        "affix_health_pct": 15005,
+        "affix_armor_pct": 13058,
+        "affix_crit": 7523,
+        "affix_lightning": 4383,
+        "affix_crit_multi": 7508,
+        "affix_attack_flat": 6625,
+        "affix_attack_pct": 4222,
+        "affix_fire": 4542,
+        "affix_ice": 4630,
+        "affix_move_speed": 3134
+      }
+    },
+    {
+      "kind": "boss",
+      "dropped": 100000,
+      "items": 300004,
+      "observedDropChance": 1,
+      "expectedDropChance": 1,
+      "rarity": {
+        "common": 14964,
+        "magic": 59898,
+        "rare": 164797,
+        "epic": 51336,
+        "legendary": 9009
+      },
+      "expectedRarityWeights": {
+        "common": 5,
+        "magic": 20,
+        "rare": 55,
+        "epic": 17,
+        "legendary": 3
+      },
+      "affixes": {
+        "affix_armor": 96339,
+        "affix_health": 114146,
+        "affix_regen": 125674,
+        "affix_armor_pct": 96546,
+        "affix_attack_speed": 79667,
+        "affix_attack_flat": 53367,
+        "affix_fire": 30614,
+        "affix_ice": 30757,
+        "affix_crit_multi": 56772,
+        "affix_move_speed": 23140,
+        "affix_health_pct": 108597,
+        "affix_lightning": 30851,
+        "affix_crit": 56859,
+        "affix_attack_pct": 35220
+      }
+    }
+  ]
+}
